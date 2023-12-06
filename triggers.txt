@@ -1,0 +1,286 @@
+1. Los procedimientos almacenados son bloques de código que se almacenan en una base de datos y se pueden llamar y ejecutar repetidamente. Contienen instrucciones SQL y lógica de programación para realizar tareas específicas en la base de datos.
+
+2. Al construir un procedimiento almacenado en MySQL, se utilizan palabras reservadas como CREATE PROCEDURE, BEGIN, END, IF, ELSE, WHILE, LOOP, etc.
+
+3. Crear un procedimiento almacenado sin parámetros en MySQL:
+
+```sql
+CREATE PROCEDURE nom_procedimiento()
+BEGIN
+END;
+```
+
+4. Crear un procedimiento almacenado sin parámetros en SQL Server:
+
+```sql
+CREATE PROCEDURE nom_procedimiento
+AS
+BEGIN
+END;
+```
+
+5. Crear un procedimiento almacenado con parámetros en MySQL:
+
+```sql
+CREATE PROCEDURE nom_procedimiento(parametro1 tipo, parametro2 tipo)
+BEGIN
+END;
+```
+
+6. Crear un procedimiento almacenado con parámetros en SQL Server:
+
+```sql
+CREATE PROCEDURE nom_procedimiento
+    @parametro1 tipo,
+    @parametro2 tipo
+AS
+BEGIN
+END;
+```
+
+7. Invocar un procedimiento almacenado en MySQL:
+
+```sql
+CALL nom_procedimiento();
+```
+
+En SQL Server, puedes usar:
+
+```sql
+EXEC nom_procedimiento;
+```
+
+8. Crear e invocar una función en MySQL:
+
+```sql
+CREATE FUNCTION nom_funcion(parametro1 tipo, parametro2 tipo)
+RETURNS tipo_retorno
+BEGIN
+END;
+```
+
+Para invocarla:
+
+```sql
+SELECT nom_funcion(parametro1, parametro2);
+```
+
+
+9. Crear e invocar un trigger en MySQL:
+
+```sql
+CREATE TRIGGER nom_trigger AFTER INSERT ON tabla
+FOR EACH ROW
+BEGIN
+END;
+```
+
+10. Siguiendo con la base datos desarrollar las siguiente practica:
+
+a. Diseña un procedimientos almacenados para crear, editar, eliminar un registro en la
+tablas Compañia, Cliente:
+
+Crear un registro en la tabla oficinas:
+
+DELIMITER //
+
+CREATE PROCEDURE CrearOficina(
+  IN p_IdOficina varchar(10),
+  IN p_Ciudad varchar(50),
+  IN p_Telefono varchar(50),
+  IN p_Direccion1 varchar(50),
+  IN p_Direccion2 varchar(50),
+  IN p_Estado varchar(50),
+  IN p_Pais varchar(50),
+  IN p_CodigoPostal varchar(15),
+  IN p_Territorio varchar(10)
+)
+BEGIN
+  INSERT INTO oficinas (IdOficina, Ciudad, Telefono, Direccion1, Direccion2, Estado, Pais, CodigoPostal, Territorio)
+  VALUES (p_IdOficina, p_Ciudad, p_Telefono, p_Direccion1, p_Direccion2, p_Estado, p_Pais, p_CodigoPostal, p_Territorio);
+END //
+
+DELIMITER ;
+
+Para editar un registro en la tabla oficinas:
+
+DELIMITER //
+
+CREATE PROCEDURE EditarOficina(
+  IN p_IdOficina varchar(10),
+  IN p_Ciudad varchar(50),
+  IN p_Telefono varchar(50),
+  IN p_Direccion1 varchar(50),
+  IN p_Direccion2 varchar(50),
+  IN p_Estado varchar(50),
+  IN p_Pais varchar(50),
+  IN p_CodigoPostal varchar(15),
+  IN p_Territorio varchar(10)
+)
+BEGIN
+  UPDATE oficinas
+  SET Ciudad = p_Ciudad,
+      Telefono = p_Telefono,
+      Direccion1 = p_Direccion1,
+      Direccion2 = p_Direccion2,
+      Estado = p_Estado,
+      Pais = p_Pais,
+      CodigoPostal = p_CodigoPostal,
+      Territorio = p_Territorio
+  WHERE IdOficina = p_IdOficina;
+END //
+
+DELIMITER ;
+
+Para eliminar un registro de la tabla oficinas:
+
+DELIMITER //
+
+CREATE PROCEDURE EliminarOficina(
+  IN p_IdOficina varchar(10)
+)
+BEGIN
+  DELETE FROM oficinas WHERE IdOficina = p_IdOficina;
+END //
+
+DELIMITER ;
+
+Para crear un registro en la tabla clientes:
+
+DELIMITER //
+
+CREATE PROCEDURE CrearCliente(
+  IN p_IdCliente int,
+  IN p_NombreCliente varchar(50),
+  IN p_ApellidoContacto varchar(50),
+  IN p_NombreContacto varchar(50),
+  IN p_Telefono varchar(50),
+  IN p_Direccion1 varchar(50),
+  IN p_Direccion2 varchar(50),
+  IN p_Ciudad varchar(50),
+  IN p_Estado varchar(50),
+  IN p_CodigoPostal varchar(15),
+  IN p_Pais varchar(50),
+  IN p_IdEmpleado int,
+  IN p_LimiteCredito decimal(10,2)
+)
+BEGIN
+  INSERT INTO clientes (IdCliente, NombreCliente, ApellidoContacto, NombreContacto, Telefono, Direccion1, Direccion2, Ciudad, Estado, CodigoPostal, Pais, IdEmpleado, LimiteCredito)
+  VALUES (p_IdCliente, p_NombreCliente, p_ApellidoContacto, p_NombreContacto, p_Telefono, p_Direccion1, p_Direccion2, p_Ciudad, p_Estado, p_CodigoPostal, p_Pais, p_IdEmpleado, p_LimiteCredito);
+END //
+
+DELIMITER ;
+
+Para editar un registro en la tabla clientes:
+
+DELIMITER //
+
+CREATE PROCEDURE EditarCliente(
+  IN p_IdCliente int,
+  IN p_NombreCliente varchar(50),
+  IN p_ApellidoContacto varchar(50),
+  IN p_NombreContacto varchar(50),
+  IN p_Telefono varchar(50),
+  IN p_Direccion1 varchar(50),
+  IN p_Direccion2 varchar(50),
+  IN p_Ciudad varchar(50),
+  IN p_Estado varchar(50),
+  IN p_CodigoPostal varchar(15),
+  IN p_Pais varchar(50),
+  IN p_IdEmpleado int,
+  IN p_LimiteCredito decimal(10,2)
+)
+BEGIN
+  UPDATE clientes
+  SET NombreCliente = p_NombreCliente,
+      ApellidoContacto = p_ApellidoContacto,
+      NombreContacto = p_NombreContacto,
+      Telefono = p_Telefono,
+      Direccion1 = p_Direccion1,
+      Direccion2 = p_Direccion2,
+      Ciudad = p_Ciudad,
+      Estado = p_Estado,
+      CodigoPostal = p_CodigoPostal,
+      Pais = p_Pais,
+      IdEmpleado = p_IdEmpleado,
+      LimiteCredito = p_LimiteCredito
+  WHERE IdCliente = p_IdCliente;
+END //
+
+DELIMITER ;
+
+Para eliminar un registro de la tabla clientes:
+
+DELIMITER //
+
+CREATE PROCEDURE EliminarCliente(
+  IN p_IdCliente int
+)
+BEGIN
+  DELETE FROM clientes WHERE IdCliente = p_IdCliente;
+END //
+
+DELIMITER ;
+
+b. Crear 5 vistas para las siguientes consultas:
+
+¿Cuál es la información de las categorías y cuántos productos están asociados a
+cada categoría? -Joins + view
+
+CREATE VIEW CategoriaProductosCount AS
+SELECT c.IdCategoria, c.Descripcion, COUNT(p.IdProducto) AS CantidadProductos
+FROM categorias c
+LEFT JOIN productos p ON c.IdCategoria = p.IdCategoria
+GROUP BY c.IdCategoria, c.Descripcion;
+
+SELECT * FROM CategoriaProductosCount;
+
+¿Qué clientes han realizado compras y cuántas compras han hecho cada uno? -
+Joins + view
+
+CREATE VIEW ClientesComprasCount AS
+SELECT c.IdCliente, c.NombreCliente, COUNT(co.IdCompra) AS CantidadCompras
+FROM clientes c
+LEFT JOIN compras co ON c.IdCliente = co.IdCliente
+GROUP BY c.IdCliente, c.NombreCliente;
+
+SELECT * FROM ClientesComprasCount;
+
+
+
+¿Cuál es la información de los clientes junto con sus compras realizadas y la fecha
+de cada compra? -Joins + view
+
+CREATE VIEW ClientesCompras AS
+SELECT c.IdCliente, c.NombreCliente, co.IdCompra, co.FechaCompra
+FROM clientes c
+JOIN compras co ON c.IdCliente = co.IdCliente;
+
+SELECT * FROM ClientesCompras;
+
+
+
+¿Cuáles son los clientes con un límite de crédito superior a 5000 y quiénes son
+sus empleados asociados? -Joins + view
+
+CREATE VIEW ClientesEmpleados AS
+SELECT c.IdCliente, c.NombreCliente, c.LimiteCredito, e.Nombre AS NombreEmpleado, e.Apellido AS ApellidoEmpleado
+FROM clientes c
+JOIN empleados e ON c.IdEmpleado = e.IdEmpleado;
+
+SELECT * 
+FROM ClientesEmpleados
+WHERE LimiteCredito > 5000;
+
+
+¿Cuántos productos no han sido incluidos en ninguna compra? -Joins + view
+
+CREATE VIEW ProductosCompras AS
+SELECT p.IdProducto, p.Nombre, c.IdCompra
+FROM productos p
+LEFT JOIN compras c ON p.IdProducto = c.IdCompra;
+
+SELECT COUNT(*) AS ProductosSinCompra
+FROM productos p
+LEFT JOIN compras c ON p.IdProducto = c.IdCompra
+WHERE c.IdCompra IS NULL;
